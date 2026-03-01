@@ -130,16 +130,19 @@ http://127.0.0.1:8000/
 
 # 🔐 Authentication Flow
 
-## 📌 1. User Registration
 
-**POST** `/api/auth/sign-up`
+---
+
+## 1️⃣ User Registration
+
+**POST** `/api/auth/sing-up`
 
 ```json
 {
   "first_name": "John",
   "last_name": "Doe",
   "email": "john@example.com",
-  "whatsapp_number": "0555555555",
+  "whatsapp_number": "+213555555555",
   "password": "StrongPassword123",
   "confirm_password": "StrongPassword123"
 }
@@ -149,16 +152,15 @@ Response:
 
 ```json
 {
-  "status": 200,
-  "message": "User created successfully. Verification code sent to email."
+  "message": "New account successfully created"
 }
 ```
 
 ---
 
-## 📧 2. Email Verification (OTP)
+## 2️⃣ Confirm Email (OTP Verification)
 
-**POST** `/api/auth/verify-code`
+**POST** `/api/auth/confirm-email`
 
 ```json
 {
@@ -167,11 +169,19 @@ Response:
 }
 ```
 
+Response:
+
+```json
+{
+  "message": "Email confirmé avec succès."
+}
+```
+
 ---
 
-## 🔑 3. Login with JWT
+## 3️⃣ Login (Email & Password)
 
-**POST** `/api/auth/login`
+**POST** `/api/auth/sing-in`
 
 ```json
 {
@@ -184,26 +194,17 @@ Response:
 
 ```json
 {
-  "access": "your_access_token",
-  "refresh": "your_refresh_token"
+  "message": "Connection successful.",
+  "tokens": {
+    "access": "jwt_access_token",
+    "refresh": "jwt_refresh_token"
+  }
 }
 ```
 
 ---
 
-## 🔄 4. Refresh Token
-
-**POST** `/api/auth/token/refresh`
-
-```json
-{
-  "refresh": "your_refresh_token"
-}
-```
-
----
-
-## 🌍 5. Google OAuth Login
+## 4️⃣ Google OAuth Login
 
 **POST** `/api/auth/google`
 
@@ -213,17 +214,57 @@ Response:
 }
 ```
 
-The backend verifies the Google token and:
+Response:
 
-- Creates a new user if not exists
-- Logs in the existing user
-- Returns JWT tokens
+```json
+{
+  "tokens": {
+    "access": "jwt_access_token",
+    "refresh": "jwt_refresh_token"
+  },
+  "user": {
+    "email": "john@gmail.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "profile_picture": "https://..."
+  },
+  "status": true
+}
+```
 
 ---
 
-## 🔁 6. Forgot Password
+## 5️⃣ Refresh Token
 
-**POST** `/api/auth/forgot-password`
+**POST** `/api/auth/token/refresh`
+
+```json
+{
+  "refresh": "your_refresh_token"
+}
+```
+
+Response:
+
+```json
+{
+  "message": "Successful refreshment.",
+  "tokens": {
+    "access": "new_access_token",
+    "refresh": "new_refresh_token"
+  }
+}
+```
+
+---
+
+# 🔁 Password Reset Flow
+
+---
+
+## 6️⃣ Request Reset Code
+
+**POST** `/api/auth/request-reset-code`
 
 ```json
 {
@@ -231,17 +272,54 @@ The backend verifies the Google token and:
 }
 ```
 
+Response:
+
+```json
+{
+  "message": "The code was sent to email: john@example.com"
+}
+```
+
 ---
 
-## 🔄 7. Reset Password
+## 7️⃣ Verify Reset Code
 
-**POST** `/api/auth/reset-password`
+**POST** `/api/auth/verify-reset-code`
 
 ```json
 {
   "email": "john@example.com",
-  "code": "123456",
-  "new_password": "NewStrongPassword123"
+  "code": "123456"
+}
+```
+
+Response:
+
+```json
+{
+  "message": "Reset your password. Make sure it's strong."
+}
+```
+
+---
+
+## 8️⃣ Change Password
+
+**POST** `/api/auth/change-password`
+
+```json
+{
+  "email": "john@example.com",
+  "password": "NewStrongPassword123",
+  "confirm_password": "NewStrongPassword123"
+}
+```
+
+Response:
+
+```json
+{
+  "message": "Password changed successfully."
 }
 ```
 
