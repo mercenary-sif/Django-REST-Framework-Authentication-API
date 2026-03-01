@@ -45,24 +45,10 @@ A secure authentication API built with:
 AUTHENTICATION_SYSTEM/
 │
 ├── Auth/ # Authentication App
-│ ├── migrations/
-│ │   └── __init__.py
-│ ├── admin.py
-│ ├── apps.py
-│ ├── emailSender.py # Email OTP logic
-│ ├── models.py # Custom User model
-│ ├── serializers.py # DRF serializers
-│ ├── tokens.py # JWT handling logic
-│ ├── views.py # API views
-│ ├── urls.py # App routes
-│ └── tests.py
+│ 
 │
 ├── Authentication_System/ # Project Configuration
-│ ├── settings.py
-│ ├── urls.py
-│ ├── asgi.py
-│ └── wsgi.py
-│
+│ 
 ├── manage.py
 ├── .gitignore
 └── requirements.txt
