@@ -401,7 +401,7 @@ python-dotenv
 
 # 👨‍💻 Author
 
-Built with ❤️ using Django REST Framework.
+Built with discipline and commitment using Django REST Framework.
 
 ---
 
